@@ -1,0 +1,23 @@
+# 네이버페이 '클릭 적립' 미션 모음.
+#
+# URL 은 고정이지만 각 항목의 bridge 링크에는 requestId 가 매번 새로 박히므로
+# 링크를 저장해두면 안 된다. 매 실행마다 목록에서 긁어야 한다.
+#
+# 클래스 이름의 해시(DetailItem-module-scss-module__YUdvEa__article)는 배포마다
+# 바뀌므로 접두사로만 매칭한다.
+
+settings:
+  max_items_per_run: 40      # 하루 총 클릭 상한 (안전장치. 목록은 계속 채워진다)
+  delay_between: [4, 11]     # 항목 사이 대기(초) 랜덤 범위
+  dwell_required_sec: 3      # 네이버가 요구하는 광고 페이지 체류 시간
+
+  # 동시에 열 탭 수. 체류 3초는 탭마다 독립이므로 동시에 열면 그만큼 빨라진다.
+  # 1 = 순차(가장 안전, 가장 느림) / 5 = 권장 / 20 = 전부 동시(가장 빠름)
+  batch_size: 5
+  batch_dwell_sec: 12       # 병렬 시 체류. 백그라운드 탭 타이머가 느려질 수 있어 넉넉히.
+
+placements:
+  - name: 포인트 쉽게 받기
+    url: https://point.pay.naver.com/pc/mission-detail?dataType=placement&pageKey=benefit_group_pp&rankType=RANDOM_DAILY&sortCompletedAdToLast=true&mssCode=pp
+    item_selector: 'a[class*="DetailItem"][href*="bridge/eventbenefit"]'
+    max_items: 25

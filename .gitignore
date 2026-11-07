@@ -1,0 +1,9 @@
+# 로그인 쿠키가 들어있음 — 절대 커밋 금지
+profile/
+logs/
+shots/
+state.json
+.venv/
+__pycache__/
+*.pyc
+.env

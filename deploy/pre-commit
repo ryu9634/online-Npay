@@ -1,0 +1,14 @@
+#!/bin/bash
+# profile/ 이나 쿠키 파일이 스테이징되면 커밋을 막는다.
+# .gitignore 를 고치거나 git add -f 를 쓰면 .gitignore 는 무력해진다.
+# 이 쿠키가 유출되면 네이버 계정이 통째로 넘어간다.
+staged=$(git diff --cached --name-only)
+bad=$(echo "$staged" | grep -Ei '(^|/)profile/|Cookies|Login Data|state\.json|^logs/|^shots/' || true)
+if [ -n "$bad" ]; then
+    echo "커밋 차단: 민감한 파일이 포함되어 있습니다."
+    echo "$bad" | sed 's/^/  - /'
+    echo
+    echo "profile/ 에는 네이버 로그인 쿠키가 들어있습니다. 절대 올리지 마세요."
+    echo "정말 의도한 것이라면 --no-verify 로 우회할 수 있습니다."
+    exit 1
+fi
